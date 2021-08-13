@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 # rest of your project
 add_executable(pico_rmii_ethernet_httpd
-    main.c
+    main.cpp lcd_api.h lcd_api.cpp
 )
 
 target_link_libraries(pico_rmii_ethernet_httpd pico_stdlib pico_multicore pico_rmii_ethernet)
