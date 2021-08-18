@@ -51,7 +51,7 @@
 #define TCP_MSS                         (1500 /*mtu*/ - 20 /*iphdr*/ - 20 /*tcphhr*/)
 #define TCP_SND_BUF                     (2 * TCP_MSS)
 
-#define LWIP_HTTPD_CGI                  0
+#define LWIP_HTTPD_CGI                  1
 #define LWIP_HTTPD_SSI                  0
 #define LWIP_HTTPD_SSI_INCLUDE_TAG      0
 

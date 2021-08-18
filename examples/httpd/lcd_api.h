@@ -1,6 +1,7 @@
 #ifndef __LCD_API_H__
 #define __LCD_API_H__
 
+#include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
 
@@ -35,58 +36,50 @@
 #define LCD_RW_WRITE        0
 #define LCD_RW_READ         1
 
-
-struct LCDAPI_CONFIG
+struct lcdapi_data
 {
-    int m_lines;
-    int m_columns;
+    int lines;
+    int columns;
     
-    int m_rs;
-    int m_enable;
+    int rs;
+    int enable;
 
-    int m_d4;
-    int m_d5;
-    int m_d6;
-    int m_d7;
+    int d4;
+    int d5;
+    int d6;
+    int d7;
 
-    int m_cursor_x;
-    int m_cursor_y;
-};
-
-class LCDApi
-{
-    LCDAPI_CONFIG m_data;
+    int cursor_x;
+    int cursor_y;
 
     bool implied_newline;
-
-public:
-    LCDApi(LCDAPI_CONFIG config);
-
-    void clear();
-
-    void show_cursor();
-    void hide_cursor();
-
-    void blink_cursor_on();
-    void blink_cursor_off();
-
-    void display_on();
-    void display_off();
-
-    void move_to(int cursor_x, int cursor_y);
-    void putchar(char character);
-    void putstr(const char* string);
-
-    void hal_write_command(uint cmd);
-    void hal_write_data(uint data);
-private:
-    void init_pin(uint pin);
-
-    void hal_write_4bits(uint nibble);
-    void hal_pulse_enable();
-    void hal_write_init_nibble(uint nibble);
-
-    int string_size(const char * str);
 };
+
+void InitPin(uint pin);
+
+void LCD_Init(struct lcdapi_data *data);
+void LCD_Clear(struct lcdapi_data *data);
+
+void LCD_ShowCursor(struct lcdapi_data *data);
+void LCD_HideCursor(struct lcdapi_data *data);
+
+void LCD_BlinkCursorOn(struct lcdapi_data *data);
+void LCD_BlinkCursorOff(struct lcdapi_data *data);
+
+void LCD_DisplayOn(struct lcdapi_data *data);
+void LCD_DisplayOff(struct lcdapi_data *data);
+
+void LCD_MoveTo(struct lcdapi_data *data, int cursor_x, int cursor_y);
+void LCD_PutChar(struct lcdapi_data *data, char character);
+void LCD_PutStr(struct lcdapi_data *data, const char* string);
+
+void LCD_HalWriteCommand(struct lcdapi_data *data, uint cmd);
+void LCD_HalWriteData(struct lcdapi_data *ldata, uint data);
+
+void LCD_HalWrite4Bits(struct lcdapi_data *data, uint nibble);
+void LCD_HalPulseEnable(struct lcdapi_data *data);
+void LCD_HalWriteInitNibble(struct lcdapi_data *data, uint nibble);
+
+int StringSize(const char * str);
 
 #endif
