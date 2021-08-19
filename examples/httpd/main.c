@@ -18,6 +18,7 @@
 
 #include "lcd_api.h"
 #include "base64.h"
+#include "entities.h"
 
 #include <string.h>
 
@@ -91,7 +92,7 @@ int main() {
     };
 
     LCD_Init(&lcd_api_cfg);
-    LCD_PutStr(&lcd_api_cfg, "Starting...\nv10");
+    LCD_PutStr(&lcd_api_cfg, "Starting...\nv11");
 
     // change the system clock to use the RMII reference clock from pin 20
     clock_configure_gpin(clk_sys, 20, 50 * MHZ, 50 * MHZ);
@@ -145,6 +146,9 @@ text_parser(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
         else if (strcmp(pcParam[i], "sline"))
             sline = pcValue[i];
     }
+
+    decode_html_entities_utf8(fline, NULL);
+    decode_html_entities_utf8(sline, NULL);
 
     int fLineLen = StringSize(fline);
     int sLineLen = StringSize(sline);
