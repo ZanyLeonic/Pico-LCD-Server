@@ -92,7 +92,7 @@ int main() {
     };
 
     LCD_Init(&lcd_api_cfg);
-    LCD_PutStr(&lcd_api_cfg, "Starting...\nv11");
+    LCD_PutStr(&lcd_api_cfg, "Starting...\nv12");
 
     // change the system clock to use the RMII reference clock from pin 20
     clock_configure_gpin(clk_sys, 20, 50 * MHZ, 50 * MHZ);
@@ -167,9 +167,12 @@ text_parser(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
     out_a[out_size_a] = '\0';
     out_b[out_size_b] = '\0';
 
-    snprintf(szBuf, sizeof(szBuf), "%s\n%s", out_a, out_b);
+    snprintf(szBuf, sizeof(szBuf), "%s\n%s", out_b, out_a); // reversed for some reason
 
     LCD_PutStr(&lcd_api_cfg, szBuf);
+
+    free(out_a);
+    free(out_b);
 
     return "/success.html";
 }
