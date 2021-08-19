@@ -91,7 +91,7 @@ int main() {
     };
 
     LCD_Init(&lcd_api_cfg);
-    LCD_PutStr(&lcd_api_cfg, "Starting...\nv9");
+    LCD_PutStr(&lcd_api_cfg, "Starting...\nv10");
 
     // change the system clock to use the RMII reference clock from pin 20
     clock_configure_gpin(clk_sys, 20, 50 * MHZ, 50 * MHZ);
@@ -114,9 +114,6 @@ int main() {
     // set the default interface and bring it up
     netif_set_default(&netif);
     netif_set_up(&netif);
-
-    netbiosns_init();
-    netbiosns_set_name("LCDMachine");
 
     // Start DHCP client and httpd
     dhcp_start(&netif);
@@ -152,8 +149,8 @@ text_parser(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
     int fLineLen = StringSize(fline);
     int sLineLen = StringSize(sline);
 
-    if (fLineLen < 4 || sLineLen < 4) return "/error.html?ex=1";
-    if (fLineLen < 25 || sLineLen < 25) return "/error.html?ex=2";
+    if (fLineLen < 4 || sLineLen < 4) return "/error.html";
+    if (fLineLen > 24 || sLineLen > 24) return "/error.html";
 
     LCD_Clear(&lcd_api_cfg);
 
